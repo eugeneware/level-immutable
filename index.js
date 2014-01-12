@@ -20,7 +20,10 @@ function put(db, key, value, options, cb) {
   options = getOptions(options);
 
   var _key = [key, -Date.now(), true];
-  db.put(_key, value, options, cb);
+  db.batch([
+    { type: 'put', key: key, value: value },
+    { type: 'put', key: _key, value: value }
+  ], options, cb);
 }
 
 function get(db, key, options, cb) {
@@ -29,6 +32,10 @@ function get(db, key, options, cb) {
 
   options.fromTime = -options.fromTime || +Infinity;
   options.toTime   = -options.toTime   || -Infinity;
+
+  if (options.fromTime === +Infinity && options.toTime === -Infinity) {
+    return db.get(key, options, cb);
+  }
 
   var found = false;
   db.createReadStream({
@@ -53,7 +60,10 @@ function del(db, key, options, cb) {
   options = getOptions(options);
 
   var _key = [key, -Date.now(), false];
-  db.put(_key, '', options, cb);
+  db.batch([
+    { type: 'del', key: key },
+    { type: 'put', key: _key, value: '' }
+  ], options, cb);
 }
 
 function batch(db, cmds, options, cb) {
@@ -66,7 +76,7 @@ function batch(db, cmds, options, cb) {
     _cmd.key = [_cmd.key, now, _cmd.type === 'put'];
     return _cmd;
   });
-  db.batch(_cmds, options, cb);
+  db.batch(cmds.concat(_cmds), options, cb);
 }
 
 function NotFoundError(key) {

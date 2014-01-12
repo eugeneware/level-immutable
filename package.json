@@ -25,8 +25,7 @@
   },
   "dependencies": {
     "clone": "~0.1.11",
-    "bytewise": "~0.7.0",
-    "level-hooks": "~4.4.4"
+    "bytewise": "~0.7.0"
   },
   "devDependencies": {
     "expect.js": "~0.2.0",
