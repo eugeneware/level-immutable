@@ -1,5 +1,6 @@
 var bytewise = require('bytewise'),
     clone = require('clone'),
+    timestamp = require('monotonic-timestamp'),
     util = require('util');
 
 module.exports = immutable;
@@ -19,7 +20,7 @@ function put(db, key, value, options, cb) {
   cb      = getCallback(options, cb);
   options = getOptions(options);
 
-  var _key = [key, -Date.now(), true];
+  var _key = [key, -timestamp(), true];
   db.batch([
     { type: 'put', key: key, value: value },
     { type: 'put', key: _key, value: value }
@@ -59,7 +60,7 @@ function del(db, key, options, cb) {
   cb      = getCallback(options, cb);
   options = getOptions(options);
 
-  var _key = [key, -Date.now(), false];
+  var _key = [key, -timestamp(), false];
   db.batch([
     { type: 'del', key: key },
     { type: 'put', key: _key, value: '' }
@@ -70,7 +71,7 @@ function batch(db, cmds, options, cb) {
   cb      = getCallback(options, cb);
   options = getOptions(options);
 
-  var now = -Date.now();
+  var now = -timestamp();
   var _cmds = cmds.map(function (cmd) {
     var _cmd = clone(cmd);
     _cmd.key = [_cmd.key, now, _cmd.type === 'put'];
