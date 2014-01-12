@@ -1,6 +1,6 @@
 {
   "name": "level-immutable",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "LevelDB/Levelup immutable history and database snapshotting based on ideas in datomic",
   "main": "index.js",
   "scripts": {
