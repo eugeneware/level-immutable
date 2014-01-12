@@ -83,6 +83,28 @@ describe('level-immutable', function() {
     }
   });
 
+  it('should be able to batch data', function(done) {
+    var data = range(0, 10).map(function (i) {
+      return {
+        type: 'put',
+        key:  'name ' + i,
+        value: { number: 10*i }
+      };
+    });
+    db.immutable.batch(data, get);
+
+    function get(err) {
+      if (err) return done(err);
+      db.immutable.get('name 3', check);
+    }
+
+    function check(err, data) {
+      if (err) return done(err);
+      expect(data).to.eql({ number: 30 });
+      done();
+    }
+  });
+
   it('should be able to access a data snapshot in the past', function(done) {
     var cmds = [ put, update, del ];
 
