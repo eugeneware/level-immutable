@@ -1,0 +1,42 @@
+{
+  "name": "level-immutable",
+  "version": "0.0.1",
+  "description": "LevelDB/Levelup immutable history and database snapshotting based on ideas in datomic",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/.bin/grunt ci"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eugeneware/level-immutable"
+  },
+  "keywords": [
+    "leveldb",
+    "levelup",
+    "datomic",
+    "immutable",
+    "history",
+    "snapshot"
+  ],
+  "author": "Eugene Ware <eugene@noblesamurai.com>",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/eugeneware/level-immutable/issues"
+  },
+  "dependencies": {
+    "clone": "~0.1.11",
+    "bytewise": "~0.7.0"
+  },
+  "devDependencies": {
+    "expect.js": "~0.2.0",
+    "grunt-contrib-jshint": "~0.6.4",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt": "~0.4.1",
+    "grunt-mocha-cli": "~1.1.0",
+    "grunt-complexity": "~0.1.3",
+    "grunt-cli": "~0.1.9",
+    "range": "0.0.2",
+    "rimraf": "~2.2.5",
+    "level": "~0.18.0"
+  }
+}
