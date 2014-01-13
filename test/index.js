@@ -20,6 +20,8 @@ function afterEach(db, done) {
 var it = redtape(beforeEach, afterEach);
 
 it('should be able to store some data in the database', function(t, db) {
+  t.plan(3);
+
   db.immutable.put('eugene', { name: 'Eugene', color: 'blue' }, get);
 
   function get(err) {
@@ -30,11 +32,12 @@ it('should be able to store some data in the database', function(t, db) {
   function check(err, data) {
     t.error(err);
     t.deepEqual(data, { name: 'Eugene', color: 'blue' });
-    t.end();
   }
 });
 
 it('should be able to store some data and change it', function(t, db) {
+  t.plan(4);
+
   db.immutable.put('eugene', { name: 'Eugene', color: 'blue' }, delay);
 
   function delay(err) {
@@ -54,11 +57,12 @@ it('should be able to store some data and change it', function(t, db) {
   function check(err, data) {
     t.error(err);
     t.deepEqual(data, { name: 'Eugene', color: 'black' });
-    t.end();
   }
 });
 
 it('should be able to delete some data', function(t, db) {
+  t.plan(4);
+
   db.immutable.put('eugene', { name: 'Eugene', color: 'blue' }, delay);
 
   function delay(err) {
@@ -78,11 +82,12 @@ it('should be able to delete some data', function(t, db) {
   function check(err, data) {
     t.equal(err.name, 'NotFoundError');
     t.equal(data, undefined);
-    t.end();
   }
 });
 
 it('should be able to batch data', function(t, db) {
+  t.plan(3);
+
   var data = range(0, 10).map(function (i) {
     return {
       type: 'put',
@@ -100,11 +105,12 @@ it('should be able to batch data', function(t, db) {
   function check(err, data) {
     t.error(err);
     t.deepEqual(data, { number: 30 });
-    t.end();
   }
 });
 
 it('should be able to access a data snapshot in the past', function(t, db) {
+  t.plan(5);
+
   var cmds = [ put, update, del ];
 
   function put(cb) {
@@ -137,6 +143,5 @@ it('should be able to access a data snapshot in the past', function(t, db) {
   function check(err, data) {
     t.error(err);
     t.deepEqual(data, { name: 'Eugene', color: 'black' });
-    t.end();
   }
 });
