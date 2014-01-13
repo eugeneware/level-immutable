@@ -4,7 +4,8 @@
   "description": "LevelDB/Levelup immutable history and database snapshotting based on ideas in datomic",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/.bin/faucet"
+    "test": "node_modules/.bin/tape test/*.js",
+    "faucet": "node_modules/.bin/faucet"
   },
   "repository": {
     "type": "git",
