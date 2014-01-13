@@ -6,18 +6,17 @@ var level = require('level'),
     redtape = require('redtape'),
     immutable = require('..');
 
-function beforeEach(done) {
-  var dbPath = path.join(__dirname, '..', 'data', 'test');
-  rimraf.sync(dbPath);
-  var db = immutable(level(dbPath, { keyEncoding: bytewise, valueEncoding: 'json' }));
-  done(null, db);
-}
-
-function afterEach(db, done) {
-  db.close(done);
-}
-
-var it = redtape(beforeEach, afterEach);
+var it = redtape({
+  beforeEach: function (cb) {
+    var dbPath = path.join(__dirname, '..', 'data', 'test');
+    rimraf.sync(dbPath);
+    var db = immutable(level(dbPath, { keyEncoding: bytewise, valueEncoding: 'json' }));
+    cb(null, db);
+  },
+  afterEach: function (db, cb) {
+    db.close(cb);
+  }
+});
 
 it('should be able to store some data in the database', function(t, db) {
   t.plan(3);
